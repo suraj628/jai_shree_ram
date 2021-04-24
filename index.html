@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>assignment</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+    <div id="po">
+        <div id="ro">
+            <label for="user-name">Name</label>
+            <input type="text" name="name" id="user-name" placeholder=" username">
+            <button type="button" class="btn btn-outline-primary" onclick="getGender()" id=" but">Gender</button>
+        </div>
+        </form>
+        <div id="lo">
+            <img id="pic" width="300" />
+            <div>Gender: <span id="gender"></span></div>
+        </div>
+    </div>
+    <script>
+        async function getGender() {
+            const response = await fetch(`https://api.genderize.io/?name=${document.getElementById('user-name').value}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('gender').textContent = data.gender;
+                })
+
+            const catpic = await fetch("https://thatcopy.pw/catapi/rest/")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('pic').src = data.url;
+                })
+
+        }
+    </script>
+</body>
+
+</html>
