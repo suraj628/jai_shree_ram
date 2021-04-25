@@ -1,40 +1,112 @@
 <!DOCTYPE html>
 <html>
+<style>
+    .container {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 130px;
+    }
 
-<head>
-    <title>assignment</title>
-    <link rel="stylesheet" href="app.css">
-</head>
+    button {
+        padding: 0.375rem 2rem;
+        height: calc(1rem + 2* 0.625rem);
+        border: none;
+        margin-left: 1rem;
+        color: white;
+        background: orangered;
+        box-shadow: 0rem 0.375rem 0.625rem rgba(255, 103, 0, 0.3);
+        border-radius: 0.1875rem;
+        margin-top: 1rem;
+        margin-bottom: 50px;
+
+    }
+
+    .label {
+        font-weight: 600;
+        margin-right: 0.625rem;
+    }
+
+    #card {
+        height: 250px;
+        display: flex;
+        flex-direction: row;
+        width: 700px;
+        background: #FFFFFF;
+        box-shadow: 0rem 0.375rem 1.625rem rgba(25, 25, 25, 0.1);
+        border-radius: 0.1875rem;
+        border: 1px black solid;
+        margin: 20px;
+    }
+
+    #pic {
+        height: 200px;
+        width: 300px;
+        margin: auto;
+    }
+
+    .searchfield {
+        width: 40rem;
+        height: 1rem;
+        border: none;
+        padding: 0.625rem;
+        border-radius: 0.1875rem;
+        background: #F2F2F2;
+        box-shadow: inset 0rem 0.375rem 0.625rem rgba(0, 0, 0, 0.05);
+        border-radius: 0.3125rem;
+        margin-right: auto;
+    }
+
+    .gender {
+        width: 350px;
+        display: flex;
+        align-items: center;
+    }
+</style>
 
 <body>
-    <div id="po">
-        <div id="ro">
-            <label for="user-name">Name</label>
-            <input type="text" name="name" id="user-name" placeholder=" username">
-            <button type="button" class="btn btn-outline-primary" onclick="getGender()" id=" but">Gender</button>
+    <div class="container">
+        <div class="label">Name:
+            <input class="searchfield" type="text" name="name" id="user-name"><br>
+        </div>
+        <div>
+            <button onclick="getGender()">Get gender</button>
         </div>
         </form>
-        <div id="lo">
-            <img id="pic" width="300" />
-            <div>Gender: <span id="gender"></span></div>
+
+        <div id="parent-div">
         </div>
-    </div>
-    <script>
-        async function getGender() {
-            const response = await fetch(`https://api.genderize.io/?name=${document.getElementById('user-name').value}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('gender').textContent = data.gender;
-                })
 
-            const catpic = await fetch("https://thatcopy.pw/catapi/rest/")
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('pic').src = data.url;
-                })
+        <script>
+            async function getGender() {
+                let genderValue, urlValue;
+                const response = await fetch(`https://api.genderize.io/?name=${document.getElementById('user-name').value}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        genderValue = data.gender;
+                    })
 
-        }
-    </script>
+                const catpic = await fetch("https://thatcopy.pw/catapi/rest/")
+                    .then(response => response.json())
+                    .then(data => {
+                        urlValue = data.url;
+                    })
+
+                let parentDiv = document.getElementById('parent-div')
+
+                var node = document.createElement('div');
+                node.id = "card"
+                node.innerHTML = `<img id="pic" src="${urlValue}" /><div class="gender"> Gender: <span id="gender">${genderValue}</span></ div> `
+                parentDiv.appendChild(node);
+                e.preventDefault();
+
+
+            }
+        </script>
 </body>
 
 </html>
